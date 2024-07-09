@@ -1,13 +1,14 @@
 package logico;
 
 public class MotherBoard {
-	private String numeroDeSerie
+	private String numeroDeSerie;
 	private float precio;
 	private int cantDisponible;
 	private String marca;
 	private String modelo;
 	private String tipoDeConector;
 	private String tipoDeMemoriaRam;
-	private ArrayList<DiscoDuro> discoDurosAceptados // v2
+	private ArrayList<DiscoDuro> discoDurosAceptados;
+	// v3
 
 }
