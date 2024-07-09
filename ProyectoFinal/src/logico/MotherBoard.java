@@ -8,6 +8,6 @@ public class MotherBoard {
 	private String modelo;
 	private String tipoDeConector;
 	private String tipoDeMemoriaRam;
-	private ArrayList<DiscoDuro> discoDurosAceptados
+	private ArrayList<DiscoDuro> discoDurosAceptados // v2
 
 }
