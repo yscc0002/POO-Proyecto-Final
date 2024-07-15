@@ -3,6 +3,7 @@ package logico;
 import java.awt.Component;
 
 public class MemoriaRAM extends Component {
+	private int cantMemoriaRAM;
 
 	public MemoriaRAM(int cantMemoriaRAM) {
 		super();
@@ -17,5 +18,5 @@ public class MemoriaRAM extends Component {
 		this.cantMemoriaRAM = cantMemoriaRAM;
 	}
 
-	private int cantMemoriaRAM;
+
 }

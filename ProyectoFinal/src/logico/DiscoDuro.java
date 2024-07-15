@@ -3,6 +3,8 @@ package logico;
 import java.awt.Component;
 
 public class DiscoDuro extends Component {
+	private int capacidadDeAlmacenamientoGB;
+	private String tipoDeConexion;
 	
 	public DiscoDuro(int capacidadDeAlmacenamientoGB, String tipoDeConexion) {
 		super();
@@ -21,7 +23,5 @@ public class DiscoDuro extends Component {
 	public void setTipoDeConexion(String tipoDeConexion) {
 		this.tipoDeConexion = tipoDeConexion;
 	}
-	private int capacidadDeAlmacenamientoGB;
-	private String tipoDeConexion;
 
 }

@@ -4,6 +4,9 @@ import java.awt.Component;
 import java.util.ArrayList;
 
 public class MotherBoard extends Component {
+	private String tipoDeConector;
+	private String tipoDeMemoriaRAM;
+	private ArrayList<DiscoDuro> discoDurosAceptados;
 	
 	public MotherBoard(String tipoDeConector, String tipoDeMemoriaRAM, ArrayList<DiscoDuro> discoDurosAceptados) {
 		super();
@@ -29,8 +32,6 @@ public class MotherBoard extends Component {
 	public void setDiscoDurosAceptados(ArrayList<DiscoDuro> discoDurosAceptados) {
 		this.discoDurosAceptados = discoDurosAceptados;
 	}
-	private String tipoDeConector;
-	private String tipoDeMemoriaRAM;
-	private ArrayList<DiscoDuro> discoDurosAceptados;
+	
 
 }

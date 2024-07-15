@@ -3,6 +3,7 @@ package logico;
 import java.util.ArrayList;
 
 public class Controladora {
+	private ArrayList <DiscoDuro> losComponentes;
 
 	public Controladora(ArrayList<DiscoDuro> losComponentes) {
 		super();
@@ -17,6 +18,5 @@ public class Controladora {
 		this.losComponentes = losComponentes;
 	}
 
-	private ArrayList <DiscoDuro> losComponentes;
 	
 }

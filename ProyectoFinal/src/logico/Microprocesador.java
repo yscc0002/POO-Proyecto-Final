@@ -4,6 +4,8 @@ package logico;
 import java.awt.Component;
 
 public class Microprocesador extends Component {
+	private String tipoDeConexion;
+	private float velocidadGHZ;
 
 	public Microprocesador(String tipoDeConexion, float velocidadGHZ) {
 		super();
@@ -22,6 +24,5 @@ public class Microprocesador extends Component {
 	public void setVelocidadGHZ(float velocidadGHZ) {
 		this.velocidadGHZ = velocidadGHZ;
 	}
-	private String tipoDeConexion;
-	private float velocidadGHZ;
+	
 }
