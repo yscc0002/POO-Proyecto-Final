@@ -1,28 +1,28 @@
 package logico;
 
+public class Microprocesador extends Componente {
+    private float velocidadGHZ;
+    private String socket;
 
-import java.awt.Component;
+    public Microprocesador(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible, float velocidadGHZ, String socket) {
+        super(numeroDeSerie, marca, modelo, precio, cantDisponible);
+        this.velocidadGHZ = velocidadGHZ;
+        this.socket = socket;
+    }
 
-public class Microprocesador extends Component {
-	private String tipoDeConexion;
-	private float velocidadGHZ;
+    public float getVelocidadGHZ() {
+        return velocidadGHZ;
+    }
 
-	public Microprocesador(String tipoDeConexion, float velocidadGHZ) {
-		super();
-		this.tipoDeConexion = tipoDeConexion;
-		this.velocidadGHZ = velocidadGHZ;
-	}
-	public String getTipoDeConexion() {
-		return tipoDeConexion;
-	}
-	public void setTipoDeConexion(String tipoDeConexion) {
-		this.tipoDeConexion = tipoDeConexion;
-	}
-	public float getVelocidadGHZ() {
-		return velocidadGHZ;
-	}
-	public void setVelocidadGHZ(float velocidadGHZ) {
-		this.velocidadGHZ = velocidadGHZ;
-	}
-	
+    public void setVelocidadGHZ(float velocidadGHZ) {
+        this.velocidadGHZ = velocidadGHZ;
+    }
+
+    public String getSocket() {
+        return socket;
+    }
+
+    public void setSocket(String socket) {
+        this.socket = socket;
+    }
 }

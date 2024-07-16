@@ -1,22 +1,28 @@
 package logico;
 
-import java.awt.Component;
+public class MemoriaRAM extends Componente {
+    private int cantMemoriaRAM;
+    private String tipoMemoria;
 
-public class MemoriaRAM extends Component {
-	private int cantMemoriaRAM;
+    public MemoriaRAM(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible, int cantMemoriaRAM, String tipoMemoria) {
+        super(numeroDeSerie, marca, modelo, precio, cantDisponible);
+        this.cantMemoriaRAM = cantMemoriaRAM;
+        this.tipoMemoria = tipoMemoria;
+    }
 
-	public MemoriaRAM(int cantMemoriaRAM) {
-		super();
-		this.cantMemoriaRAM = cantMemoriaRAM;
-	}
+    public int getCantMemoriaRAM() {
+        return cantMemoriaRAM;
+    }
 
-	public int getCantMemoriaRAM() {
-		return cantMemoriaRAM;
-	}
+    public void setCantMemoriaRAM(int cantMemoriaRAM) {
+        this.cantMemoriaRAM = cantMemoriaRAM;
+    }
 
-	public void setCantMemoriaRAM(int cantMemoriaRAM) {
-		this.cantMemoriaRAM = cantMemoriaRAM;
-	}
+    public String getTipoMemoria() {
+        return tipoMemoria;
+    }
 
-
+    public void setTipoMemoria(String tipoMemoria) {
+        this.tipoMemoria = tipoMemoria;
+    }
 }
