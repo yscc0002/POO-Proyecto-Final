@@ -1,6 +1,8 @@
 package logico;
 
 import java.util.ArrayList;
+import java.util.Date;
+
 
 public class Controladora {
     private ArrayList<Componente> inventario;
@@ -70,4 +72,11 @@ public class Controladora {
         }
         return -1; 
     }
+    
+    public void crearPedido(String idPedido, Cliente cliente, ArrayList<Componente> componentesSeleccionados) {
+        Date fechaActual = new Date();
+        Pedido nuevoPedido = new Pedido(idPedido, cliente, componentesSeleccionados, fechaActual);
+        losPedidos.add(nuevoPedido);
+    }
+    
 }
