@@ -15,14 +15,6 @@ public class Pedido {
         this.cliente = cliente;
         this.componentes = componentes;
         this.fecha = fecha;
-        calcularTotal();
-    }
-
-    private void calcularTotal() {
-        total = 0;
-        for (Componente componente : componentes) {
-            total += componente.getPrecio();
-        }
     }
 
     public String getId() {
@@ -47,7 +39,6 @@ public class Pedido {
 
     public void setComponentes(ArrayList<Componente> componentes) {
         this.componentes = componentes;
-        calcularTotal();
     }
 
     public Date getFecha() {
@@ -60,5 +51,13 @@ public class Pedido {
 
     public float getTotal() {
         return total;
+    }
+    
+    private void calcularTotalconImpuestos() {
+        total = 0;
+        for (Componente componente : componentes) {
+            total += componente.getPrecio();
+        }
+        total += total * 0.18;
     }
 }

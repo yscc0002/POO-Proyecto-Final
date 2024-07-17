@@ -61,4 +61,13 @@ public class Controladora {
         }
         return null;
     }
+    
+    public int consultarDisponibilidad(String numeroDeSerie) {
+        for (Componente componente : inventario) {
+            if (componente.getNumeroDeSerie().equals(numeroDeSerie)) {
+                return componente.getCantDisponible();
+            }
+        }
+        return -1; 
+    }
 }
