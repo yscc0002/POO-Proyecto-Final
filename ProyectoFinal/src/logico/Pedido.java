@@ -53,7 +53,7 @@ public class Pedido {
         return total;
     }
     
-    private void calcularTotalconImpuestos() {
+    private void calcularTotalConImpuestos() {
         total = 0;
         for (Componente componente : componentes) {
             total += componente.getPrecio();

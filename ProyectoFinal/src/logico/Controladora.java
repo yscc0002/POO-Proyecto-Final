@@ -3,80 +3,79 @@ package logico;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class Controladora {
-    private ArrayList<Componente> inventario;
-    private ArrayList<Cliente> losClientes;
-    private ArrayList<Pedido> losPedidos;
+	private ArrayList<Componente> inventario;
+	private ArrayList<Cliente> losClientes;
+	private ArrayList<Pedido> losPedidos;
 
-    public Controladora() {
-        this.inventario = new ArrayList<>();
-        this.losClientes = new ArrayList<>();
-        this.losPedidos = new ArrayList<>();
-    }
+	public Controladora() {
+		this.inventario = new ArrayList<>();
+		this.losClientes = new ArrayList<>();
+		this.losPedidos = new ArrayList<>();
+	}
 
-    public ArrayList<Componente> getInventario() {
-        return inventario;
-    }
+	public ArrayList<Componente> getInventario() {
+		return inventario;
+	}
 
-    public void setInventario(ArrayList<Componente> inventario) {
-        this.inventario = inventario;
-    }
+	public void setInventario(ArrayList<Componente> inventario) {
+		this.inventario = inventario;
+	}
 
-    public ArrayList<Cliente> getLosClientes() {
-        return losClientes;
-    }
+	public ArrayList<Cliente> getLosClientes() {
+		return losClientes;
+	}
 
-    public void setLosClientes(ArrayList<Cliente> losClientes) {
-        this.losClientes = losClientes;
-    }
+	public void setLosClientes(ArrayList<Cliente> losClientes) {
+		this.losClientes = losClientes;
+	}
 
-    public ArrayList<Pedido> getLosPedidos() {
-        return losPedidos;
-    }
+	public ArrayList<Pedido> getLosPedidos() {
+		return losPedidos;
+	}
 
-    public void setLosPedidos(ArrayList<Pedido> losPedidos) {
-        this.losPedidos = losPedidos;
-    }
+	public void setLosPedidos(ArrayList<Pedido> losPedidos) {
+		this.losPedidos = losPedidos;
+	}
 
-    public void agregarDiscoDuro(DiscoDuro discoDuro) {
-        inventario.add(discoDuro);
-    }
+	public void agregarDiscoDuro(DiscoDuro discoDuro) {
+		inventario.add(discoDuro);
+	}
 
-    public void agregarMemoriaRAM(MemoriaRAM memoriaRAM) {
-        inventario.add(memoriaRAM);
-    }
+	public void agregarMemoriaRAM(MemoriaRAM memoriaRAM) {
+		inventario.add(memoriaRAM);
+	}
 
-    public void agregarMicroprocesador(Microprocesador microprocesador) {
-        inventario.add(microprocesador);
-    }
+	public void agregarMicroprocesador(Microprocesador microprocesador) {
+		inventario.add(microprocesador);
+	}
 
-    public void agregarMotherBoard(MotherBoard motherBoard) {
-        inventario.add(motherBoard);
-    }
+	public void agregarMotherBoard(MotherBoard motherBoard) {
+		inventario.add(motherBoard);
+	}
 
-    public Componente buscarComponentePorNumeroDeSerie(String numeroDeSerie) {
-        for (Componente componente : inventario) {
-            if (componente.getNumeroDeSerie().equals(numeroDeSerie)) {
-                return componente;
-            }
-        }
-        return null;
-    }
-    
-    public int consultarDisponibilidad(String numeroDeSerie) {
-        for (Componente componente : inventario) {
-            if (componente.getNumeroDeSerie().equals(numeroDeSerie)) {
-                return componente.getCantDisponible();
-            }
-        }
-        return -1; 
-    }
-    
-    public void crearPedido(String idPedido, Cliente cliente, ArrayList<Componente> componentesSeleccionados) {
-        Date fechaActual = new Date();
-        Pedido nuevoPedido = new Pedido(idPedido, cliente, componentesSeleccionados, fechaActual);
-        losPedidos.add(nuevoPedido);
-    }
-    
+	public Componente buscarComponentePorNumeroDeSerie(String numeroDeSerie) {
+		for (Componente componente : inventario) {
+			if (componente.getNumeroDeSerie().equals(numeroDeSerie)) {
+				return componente;
+			}
+		}
+		return null;
+	}
+
+	public int consultarDisponibilidad(String numeroDeSerie) {
+		for (Componente componente : inventario) {
+			if (componente.getNumeroDeSerie().equals(numeroDeSerie)) {
+				return componente.getCantDisponible();
+			}
+		}
+		return -1; 
+	}
+
+	public void crearPedido(String idPedido, Cliente cliente, ArrayList<Componente> componentesSeleccionados) {
+		Date fechaActual = new Date();
+		Pedido nuevoPedido = new Pedido(idPedido, cliente, componentesSeleccionados, fechaActual);
+		losPedidos.add(nuevoPedido);
+	}
+
 }
