@@ -80,6 +80,9 @@ public class Principal extends JFrame {
 		
 		JMenu mnNewMenu_3 = new JMenu("Tienda");
 		menuBar.add(mnNewMenu_3);
+		
+		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Null");
+		mnNewMenu_3.add(mntmNewMenuItem_8);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

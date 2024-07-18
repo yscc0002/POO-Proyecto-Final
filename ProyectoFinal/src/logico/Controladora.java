@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Controladora {
+	
 	private ArrayList<Componente> inventario;
 	private ArrayList<Cliente> losClientes;
 	private ArrayList<Pedido> losPedidos;
