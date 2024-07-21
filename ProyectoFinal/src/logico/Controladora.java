@@ -5,22 +5,34 @@ import java.util.Date;
 
 public class Controladora {
 	
-	private ArrayList<Componente> inventario;
+	private ArrayList<Componente> losComponentes;
 	private ArrayList<Cliente> losClientes;
 	private ArrayList<Pedido> losPedidos;
-
-	public Controladora() {
-		this.inventario = new ArrayList<>();
+	
+	//Patron Singleton
+	private static Controladora controladora = null;
+	
+	private Controladora() {
+		super();
+		this.losComponentes = new ArrayList<>();
 		this.losClientes = new ArrayList<>();
 		this.losPedidos = new ArrayList<>();
 	}
-
-	public ArrayList<Componente> getInventario() {
-		return inventario;
+	
+	public static Controladora getInstance() {
+		if(controladora==null) {
+			controladora = new Controladora();
+		}return controladora;
 	}
 
-	public void setInventario(ArrayList<Componente> inventario) {
-		this.inventario = inventario;
+	//Cierre Patron Singleton
+
+	public ArrayList<Componente> getLosComponentes() {
+		return losComponentes;
+	}
+
+	public void setLosComponentes(ArrayList<Componente> losComponentes) {
+		this.losComponentes = losComponentes;
 	}
 
 	public ArrayList<Cliente> getLosClientes() {
@@ -39,24 +51,8 @@ public class Controladora {
 		this.losPedidos = losPedidos;
 	}
 
-	public void agregarDiscoDuro(DiscoDuro discoDuro) {
-		inventario.add(discoDuro);
-	}
-
-	public void agregarMemoriaRAM(MemoriaRAM memoriaRAM) {
-		inventario.add(memoriaRAM);
-	}
-
-	public void agregarMicroprocesador(Microprocesador microprocesador) {
-		inventario.add(microprocesador);
-	}
-
-	public void agregarMotherBoard(MotherBoard motherBoard) {
-		inventario.add(motherBoard);
-	}
-
 	public Componente buscarComponentePorNumeroDeSerie(String numeroDeSerie) {
-		for (Componente componente : inventario) {
+		for (Componente componente : losComponentes) {
 			if (componente.getNumeroDeSerie().equals(numeroDeSerie)) {
 				return componente;
 			}
@@ -64,8 +60,8 @@ public class Controladora {
 		return null;
 	}
 
-	public int consultarDisponibilidad(String numeroDeSerie) {
-		for (Componente componente : inventario) {
+	public int consultarDisponibilidadComponente(String numeroDeSerie) {
+		for (Componente componente : losComponentes) {
 			if (componente.getNumeroDeSerie().equals(numeroDeSerie)) {
 				return componente.getCantDisponible();
 			}
@@ -78,5 +74,6 @@ public class Controladora {
 		Pedido nuevoPedido = new Pedido(idPedido, cliente, componentesSeleccionados, fechaActual);
 		losPedidos.add(nuevoPedido);
 	}
+
 
 }
