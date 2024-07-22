@@ -81,8 +81,8 @@ public class Controladora {
 	}
 	
 	public void agregarComponente(Componente nuevoComponente) {
-    	losComponentes.add(nuevoComponente);
-    }
+		losComponentes.add(nuevoComponente);
+	}
 	
 	 public boolean eliminarComponente(String numeroDeSerie) {
 	        for (int i = 0; i < losComponentes.size(); i++) {
@@ -92,7 +92,7 @@ public class Controladora {
 	            }
 	        }
 	        return false;
-	    }
+	 }
 	 
 	 public ArrayList<Componente> buscarComponentesPorMarcaYModelo(String marca, String modelo) {
 	        ArrayList<Componente> componentesEncontrados = new ArrayList<>();
@@ -102,12 +102,10 @@ public class Controladora {
 	            }
 	        }
 	        return componentesEncontrados;
-	    }
+	 }
 	 
 	 public void crearUsuarioCliente(String idCliente, String nombre, String direccion, String telefono, String email) {
 	        Cliente nuevoCliente = new Cliente(idCliente, nombre, direccion, telefono, email);
 	        losClientes.add(nuevoCliente);
-	    }
-
-
+	 }
 }
