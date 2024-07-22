@@ -70,10 +70,44 @@ public class Controladora {
 	}
 
 	public void crearPedido(String idPedido, Cliente cliente, ArrayList<Componente> componentesSeleccionados) {
-		Date fechaActual = new Date();
-		Pedido nuevoPedido = new Pedido(idPedido, cliente, componentesSeleccionados, fechaActual);
-		losPedidos.add(nuevoPedido);
+	    Date fechaActual = new Date();
+	    float montoTotal = 0;
+	    for (Componente componente : componentesSeleccionados) {
+	        montoTotal += componente.getPrecio();
+	    }
+	    montoTotal += montoTotal * 0.18;
+	    Pedido nuevoPedido = new Pedido(idPedido, cliente, componentesSeleccionados, fechaActual, montoTotal);
+	    losPedidos.add(nuevoPedido);
 	}
+	
+	public void agregarComponente(Componente nuevoComponente) {
+    	losComponentes.add(nuevoComponente);
+    }
+	
+	 public boolean eliminarComponente(String numeroDeSerie) {
+	        for (int i = 0; i < losComponentes.size(); i++) {
+	            if (losComponentes.get(i).getNumeroDeSerie().equals(numeroDeSerie)) {
+	            	losComponentes.remove(i);
+	                return true; 
+	            }
+	        }
+	        return false;
+	    }
+	 
+	 public ArrayList<Componente> buscarComponentesPorMarcaYModelo(String marca, String modelo) {
+	        ArrayList<Componente> componentesEncontrados = new ArrayList<>();
+	        for (Componente componente : losComponentes) {
+	            if (componente.getMarca().equalsIgnoreCase(marca) && componente.getModelo().equalsIgnoreCase(modelo)) {
+	                componentesEncontrados.add(componente);
+	            }
+	        }
+	        return componentesEncontrados;
+	    }
+	 
+	 public void crearUsuarioCliente(String idCliente, String nombre, String direccion, String telefono, String email) {
+	        Cliente nuevoCliente = new Cliente(idCliente, nombre, direccion, telefono, email);
+	        losClientes.add(nuevoCliente);
+	    }
 
 
 }
