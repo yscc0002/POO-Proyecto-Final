@@ -160,10 +160,21 @@ public class Controladora {
             for (Componente componente : pedido.getComponentesPedidos()) {
                 reporte.append(" - ").append(componente.getMarca()).append(" ").append(componente.getModelo()).append(" (").append(componente.getNumeroDeSerie()).append(")\n");
             }
-            reporte.append("-------------------------------------------------------------------\n");
             reporteVentas.add(reporte.toString());
         }
 
         return reporteVentas;
+    }
+
+    public boolean actualizarComponente(String numeroDeSerie, String nuevaMarca, String nuevoModelo, float nuevoPrecio, int nuevaCantidadDisponible) {
+        Componente componente = buscarComponentePorNumeroDeSerie(numeroDeSerie);
+        if (componente != null) {
+            componente.setMarca(nuevaMarca);
+            componente.setModelo(nuevoModelo);
+            componente.setPrecio(nuevoPrecio);
+            componente.setCantDisponible(nuevaCantidadDisponible);
+            return true;
+        }
+        return false; 
     }
 }

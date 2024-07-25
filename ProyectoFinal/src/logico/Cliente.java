@@ -83,4 +83,9 @@ public class Cliente {
             return 500; 
         }
     }
+
+    public boolean actualizarComponente(String numeroDeSerie, String nuevaMarca, String nuevoModelo, float nuevoPrecio, int nuevaCantidadDisponible) {
+        Controladora controladora = Controladora.getInstance();
+        return controladora.actualizarComponente(numeroDeSerie, nuevaMarca, nuevoModelo, nuevoPrecio, nuevaCantidadDisponible);
+    }
 }
