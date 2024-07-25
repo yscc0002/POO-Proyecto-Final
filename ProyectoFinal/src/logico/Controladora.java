@@ -109,4 +109,42 @@ public class Controladora {
 	        Cliente nuevoCliente = new Cliente(idCliente, nombre, direccion, telefono, email);
 	        losClientes.add(nuevoCliente);
 	 }
+	 
+	 public ArrayList<DiscoDuro> encontrarDiscosDurosCompatibles(String numeroDeSerieMotherBoard) {
+	        MotherBoard motherboardBuscada = buscarMotherBoardPorNumeroDeSerie(numeroDeSerieMotherBoard);
+	        ArrayList<DiscoDuro> discosCompatibles = new ArrayList<>();
+
+	        if (motherboardBuscada != null) {
+	            ArrayList<DiscoDuro> discosAceptados = motherboardBuscada.getDiscoDurosAceptados(); 
+	            for (Componente componente : losComponentes) {
+	                if (componente instanceof DiscoDuro) {
+	                    DiscoDuro disco = (DiscoDuro) componente;
+	                    if (esCompatible(disco, discosAceptados) && disco.getCantDisponible() > 0) {
+	                        discosCompatibles.add(disco);
+	                    }
+	                }
+	            }
+	        }
+	        return discosCompatibles;
+	    }
+
+	    private MotherBoard buscarMotherBoardPorNumeroDeSerie(String numeroDeSerie) {
+	        for (Componente componente : losComponentes) {
+	            if (componente instanceof MotherBoard && componente.getNumeroDeSerie().equals(numeroDeSerie)) {
+	                return (MotherBoard) componente;
+	            }
+	        }
+	        return null; 
+	    }
+
+	    private boolean esCompatible(DiscoDuro disco, ArrayList<DiscoDuro> discosAceptados) {
+	        for (DiscoDuro discoAceptado : discosAceptados) {
+	            if (disco.getTipoDeConexion().equalsIgnoreCase(discoAceptado.getTipoDeConexion())) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	    
+	    
 }
