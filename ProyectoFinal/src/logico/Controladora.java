@@ -8,6 +8,7 @@ public class Controladora {
 	private ArrayList<Componente> losComponentes;
 	private ArrayList<Cliente> losClientes;
 	private ArrayList<Pedido> losPedidos;
+	public static int codComponente = 1;
 	
 	//Patron Singleton
 	private static Controladora controladora = null;

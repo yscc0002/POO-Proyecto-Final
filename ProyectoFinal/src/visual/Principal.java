@@ -35,7 +35,7 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
-		setTitle("DellComputing");
+		setTitle("Tienda de Computacion Los Charlatanes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 653, 498);
 		
@@ -45,8 +45,8 @@ public class Principal extends JFrame {
 		JMenu mnNewMenu = new JMenu("Componentes");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Registro");
-		mnNewMenu.add(mntmNewMenuItem);
+		JMenuItem menuItemRegistro = new JMenuItem("Registro");
+		mnNewMenu.add(menuItemRegistro);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listado");
 		mnNewMenu.add(mntmNewMenuItem_1);
