@@ -177,4 +177,23 @@ public class Controladora {
         }
         return false; 
     }
+    
+    public ArrayList<Microprocesador> encontrarMicroprocesadoresCompatibles(String numeroDeSerieMotherBoard) {
+        MotherBoard motherboardBuscada = buscarMotherBoardPorNumeroDeSerie(numeroDeSerieMotherBoard);
+        ArrayList<Microprocesador> microsCompatibles = new ArrayList<>();
+
+        if (motherboardBuscada != null) {
+            String socketRequerido = motherboardBuscada.getTipoDeConector(); // Asumimos que hay un getter para el tipo de socket en la clase MotherBoard
+            for (Componente componente : losComponentes) {
+                if (componente instanceof Microprocesador) {
+                    Microprocesador micro = (Microprocesador) componente;
+                    if (micro.getSocket().equalsIgnoreCase(socketRequerido) && micro.getCantDisponible() > 0) {
+                        microsCompatibles.add(micro);
+                    }
+                }
+            }
+        }
+        return microsCompatibles;
+    }
+    
 }

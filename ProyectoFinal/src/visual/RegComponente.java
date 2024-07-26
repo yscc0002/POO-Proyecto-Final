@@ -350,7 +350,7 @@ public class RegComponente extends JDialog {
 						}
 						if(rdbMemoriaRAM.isSelected()) {
 							int cantMemoriaRAM = new Integer(jSpinnerCantidadMemoriaRAM.getValue().toString());
-							Componente memoriaRam = new MemoriaRAM(numeroDeSerie, marca, modelo, precio, cantDisponible, cantMemoriaRAM);
+							Componente memoriaRam = new MemoriaRAM(numeroDeSerie, marca, modelo, precio, cantDisponible, cantMemoriaRAM, "");
 							Controladora.getInstance().agregarComponente(memoriaRam);
 						}
 						if(rdbMicroprocesador.isSelected()) {
