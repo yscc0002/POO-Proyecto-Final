@@ -16,7 +16,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.border.TitledBorder;
 
+import org.jfree.data.general.DefaultPieDataset;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+
 import logico.Controladora;
+import java.io.File;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Principal extends JFrame {
 
@@ -50,7 +60,7 @@ public class Principal extends JFrame {
 			Controladora temp = (Controladora) in.readObject();
 			Controladora.setControladora(temp);
 		} catch (FileNotFoundException e) {
-			System.out.println("Archivo no encontrado, se creara un nuevo archivo al cerrar la aplicacion.");
+			System.out.println("Archivo no encontrado, se creará un nuevo archivo al cerrar la aplicación.");
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -117,6 +127,14 @@ public class Principal extends JFrame {
 
 		JMenuItem menuItemNull = new JMenuItem("Null");
 		mnTienda.add(menuItemNull);
+		
+		JMenuItem menuItemMostrarGrafico = new JMenuItem("Rango de ventas por zona");
+		mnTienda.add(menuItemMostrarGrafico);
+		menuItemMostrarGrafico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mostrarGrafico();
+			}
+		});
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -127,5 +145,30 @@ public class Principal extends JFrame {
 		pnlDeTrabajo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(pnlDeTrabajo, BorderLayout.CENTER);
 		pnlDeTrabajo.setLayout(new BorderLayout(0, 0));
+	}
+
+	private void mostrarGrafico() {
+		
+		DefaultPieDataset data = new DefaultPieDataset();
+		data.setValue("Local", 40);
+		data.setValue("Nacional", 30);
+		data.setValue("Internacional", 20);
+
+		JFreeChart chart = ChartFactory.createPieChart(
+				"Rango de ventas por zona",
+				data,
+				true,
+				true,
+				false);
+
+		ChartFrame frame = new ChartFrame("JFreeChart", chart);
+		frame.pack();
+		frame.setVisible(true);
+
+		try {
+			ChartUtilities.saveChartAsJPEG(new File("rango_ventas_por_zona.jpg"), chart, 500, 500);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
