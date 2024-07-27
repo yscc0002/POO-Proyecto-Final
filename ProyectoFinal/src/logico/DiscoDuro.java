@@ -1,29 +1,32 @@
 package logico;
 
-public class DiscoDuro extends Componente {
-    private int capacidadDeAlmacenamientoGB;
-    private String tipoDeConexion;
+import java.io.Serializable;
 
-    public DiscoDuro(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible,
-            int capacidadDeAlmacenamientoGB, String tipoDeConexion) {
-        super(numeroDeSerie, marca, modelo, precio, cantDisponible);
-        this.capacidadDeAlmacenamientoGB = capacidadDeAlmacenamientoGB;
-        this.tipoDeConexion = tipoDeConexion;
-    }
+public class DiscoDuro extends Componente implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private int capacidadDeAlmacenamientoGB;
+	private String tipoDeConexion;
 
-    public int getCapacidadDeAlmacenamientoGB() {
-        return capacidadDeAlmacenamientoGB;
-    }
+	public DiscoDuro(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible,
+			int capacidadDeAlmacenamientoGB, String tipoDeConexion) {
+		super(numeroDeSerie, marca, modelo, precio, cantDisponible);
+		this.capacidadDeAlmacenamientoGB = capacidadDeAlmacenamientoGB;
+		this.tipoDeConexion = tipoDeConexion;
+	}
 
-    public void setCapacidadDeAlmacenamientoGB(int capacidadDeAlmacenamientoGB) {
-        this.capacidadDeAlmacenamientoGB = capacidadDeAlmacenamientoGB;
-    }
+	public int getCapacidadDeAlmacenamientoGB() {
+		return capacidadDeAlmacenamientoGB;
+	}
 
-    public String getTipoDeConexion() {
-        return tipoDeConexion;
-    }
+	public void setCapacidadDeAlmacenamientoGB(int capacidadDeAlmacenamientoGB) {
+		this.capacidadDeAlmacenamientoGB = capacidadDeAlmacenamientoGB;
+	}
 
-    public void setTipoDeConexion(String tipoDeConexion) {
-        this.tipoDeConexion = tipoDeConexion;
-    }
+	public String getTipoDeConexion() {
+		return tipoDeConexion;
+	}
+
+	public void setTipoDeConexion(String tipoDeConexion) {
+		this.tipoDeConexion = tipoDeConexion;
+	}
 }

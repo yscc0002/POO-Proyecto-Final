@@ -1,28 +1,32 @@
 package logico;
 
-public class MemoriaRAM extends Componente {
-    private int cantMemoriaRAM;
-    private String tipoMemoria;
+import java.io.Serializable;
 
-    public MemoriaRAM(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible, int cantMemoriaRAM, String tipoMemoria) {
-        super(numeroDeSerie, marca, modelo, precio, cantDisponible);
-        this.cantMemoriaRAM = cantMemoriaRAM;
-        this.tipoMemoria = tipoMemoria;
-    }
+public class MemoriaRAM extends Componente implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private int cantMemoriaRAM;
+	private String tipoMemoria;
 
-    public int getCantMemoriaRAM() {
-        return cantMemoriaRAM;
-    }
+	public MemoriaRAM(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible,
+			int cantMemoriaRAM, String tipoMemoria) {
+		super(numeroDeSerie, marca, modelo, precio, cantDisponible);
+		this.cantMemoriaRAM = cantMemoriaRAM;
+		this.tipoMemoria = tipoMemoria;
+	}
 
-    public void setCantMemoriaRAM(int cantMemoriaRAM) {
-        this.cantMemoriaRAM = cantMemoriaRAM;
-    }
+	public int getCantMemoriaRAM() {
+		return cantMemoriaRAM;
+	}
 
-    public String getTipoMemoria() {
-        return tipoMemoria;
-    }
+	public void setCantMemoriaRAM(int cantMemoriaRAM) {
+		this.cantMemoriaRAM = cantMemoriaRAM;
+	}
 
-    public void setTipoMemoria(String tipoMemoria) {
-        this.tipoMemoria = tipoMemoria;
-    }
+	public String getTipoMemoria() {
+		return tipoMemoria;
+	}
+
+	public void setTipoMemoria(String tipoMemoria) {
+		this.tipoMemoria = tipoMemoria;
+	}
 }

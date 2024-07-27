@@ -94,7 +94,7 @@ public class RegComponente extends JDialog {
 				txtID = new JTextField();
 				txtID.setEditable(false);
 				txtID.setBounds(144, 34, 146, 26);
-				txtID.setText("NumSer#"+Controladora.codComponente);
+				txtID.setText("NumSer#" + Controladora.codComponente);
 				pnlDeTrabajo.add(txtID);
 				txtID.setColumns(10);
 			}
@@ -247,7 +247,8 @@ public class RegComponente extends JDialog {
 			pnlMotherBoard.add(btnAgregarDiscoDuroMotherBoard);
 
 			cbxTipoConexionDiscoDuroMotherBoard = new JComboBox();
-			cbxTipoConexionDiscoDuroMotherBoard.setModel(new DefaultComboBoxModel(new String[] {"IDE", "SATA", "SATA-2", "SATA-3"}));
+			cbxTipoConexionDiscoDuroMotherBoard
+					.setModel(new DefaultComboBoxModel(new String[] { "IDE", "SATA", "SATA-2", "SATA-3" }));
 			cbxTipoConexionDiscoDuroMotherBoard.setBounds(250, 62, 180, 26);
 			pnlMotherBoard.add(cbxTipoConexionDiscoDuroMotherBoard);
 
@@ -261,7 +262,8 @@ public class RegComponente extends JDialog {
 			pnlDiscoDuro.add(lblCapacidadDeAlmacenamiento);
 
 			JComboBox cbxTipoConexionDiscoDuro = new JComboBox();
-			cbxTipoConexionDiscoDuro.setModel(new DefaultComboBoxModel(new String[] {"IDE", "SATA", "SATA-2", "SATA-3"}));
+			cbxTipoConexionDiscoDuro
+					.setModel(new DefaultComboBoxModel(new String[] { "IDE", "SATA", "SATA-2", "SATA-3" }));
 			cbxTipoConexionDiscoDuro.setBounds(503, 16, 180, 26);
 			pnlDiscoDuro.add(cbxTipoConexionDiscoDuro);
 
@@ -287,7 +289,7 @@ public class RegComponente extends JDialog {
 			pnlMicroprocesador.add(jSpinnerVelocidadProcesamiento);
 
 			cbxTipoConexionMicroprocesador = new JComboBox();
-			cbxTipoConexionMicroprocesador.setModel(new DefaultComboBoxModel(new String[] {"PGA", "LGA", "BGA"}));
+			cbxTipoConexionMicroprocesador.setModel(new DefaultComboBoxModel(new String[] { "PGA", "LGA", "BGA" }));
 			cbxTipoConexionMicroprocesador.setBounds(515, 13, 146, 26);
 			pnlMicroprocesador.add(cbxTipoConexionMicroprocesador);
 
@@ -307,7 +309,6 @@ public class RegComponente extends JDialog {
 			jSpinnerCantidadMemoriaRAM = new JSpinner();
 			jSpinnerCantidadMemoriaRAM.setBounds(221, 16, 99, 26);
 			pnlMemoriaRAM.add(jSpinnerCantidadMemoriaRAM);
-
 
 			rdbMotherBoard.setSelected(true);
 			rdbDiscoDuro.setSelected(false);
@@ -329,36 +330,43 @@ public class RegComponente extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						System.out.println("So");
 
-						String numeroDeSerie = txtID.getText();						
+						String numeroDeSerie = txtID.getText();
 						String marca = txtMarca.getText();
 						String modelo = txtModelo.getText();
-						
+
 						float precio = Float.parseFloat(txtPrecio.getText().toString());
 						int cantDisponible = Integer.parseInt(jSpinnerCantDisponible.getValue().toString());
-						
-						if(rdbMotherBoard.isSelected()) {
+
+						if (rdbMotherBoard.isSelected()) {
 							String tipoDeConectorMotherboard = txtTipoDeConectorMotherBoard.getText();
 							String tipoMemoriaRAM = txtTipoMemoriaRAMMotherBoard.getText();
 							ArrayList<DiscoDuro> discoDurosAceptados = new ArrayList<>();
-							Componente motherBoard = new MotherBoard(numeroDeSerie, marca, modelo, precio, cantDisponible, tipoDeConectorMotherboard, tipoMemoriaRAM, discoDurosAceptados);
+							Componente motherBoard = new MotherBoard(numeroDeSerie, marca, modelo, precio,
+									cantDisponible, tipoDeConectorMotherboard, tipoMemoriaRAM, discoDurosAceptados);
 							Controladora.getInstance().agregarComponente(motherBoard);
-						}else if(rdbDiscoDuro.isSelected()) {
-							int capacidadAlmacenamientoDiscoDuro = new Integer(jSpinnerCapacidadAlmacenamientoDiscoDuro.getValue().toString());
-							String tipoDeConexionDiscoDuro = cbxTipoConexionDiscoDuroMotherBoard.getSelectedItem().toString();
-							Componente discoDuro = new DiscoDuro(numeroDeSerie, marca, modelo, precio, cantDisponible, capacidadAlmacenamientoDiscoDuro, tipoDeConexionDiscoDuro);
+						} else if (rdbDiscoDuro.isSelected()) {
+							int capacidadAlmacenamientoDiscoDuro = new Integer(
+									jSpinnerCapacidadAlmacenamientoDiscoDuro.getValue().toString());
+							String tipoDeConexionDiscoDuro = cbxTipoConexionDiscoDuroMotherBoard.getSelectedItem()
+									.toString();
+							Componente discoDuro = new DiscoDuro(numeroDeSerie, marca, modelo, precio, cantDisponible,
+									capacidadAlmacenamientoDiscoDuro, tipoDeConexionDiscoDuro);
 							Controladora.getInstance().agregarComponente(discoDuro);
-						}else if(rdbMemoriaRAM.isSelected()) {
+						} else if (rdbMemoriaRAM.isSelected()) {
 							int cantMemoriaRAM = new Integer(jSpinnerCantidadMemoriaRAM.getValue().toString());
-							Componente memoriaRam = new MemoriaRAM(numeroDeSerie, marca, modelo, precio, cantDisponible, cantMemoriaRAM, "");
+							Componente memoriaRam = new MemoriaRAM(numeroDeSerie, marca, modelo, precio, cantDisponible,
+									cantMemoriaRAM, "");
 							Controladora.getInstance().agregarComponente(memoriaRam);
-						}else if(rdbMicroprocesador.isSelected()) {
+						} else if (rdbMicroprocesador.isSelected()) {
 							String tipoDeConexion = cbxTipoConexionMicroprocesador.getSelectedItem().toString();
 							float velocidadGHZ = new Float(jSpinnerVelocidadProcesamiento.getValue().toString());
-							Componente microprocesador = new Microprocesador(numeroDeSerie, marca, modelo, precio, cantDisponible, velocidadGHZ, tipoDeConexion);
+							Componente microprocesador = new Microprocesador(numeroDeSerie, marca, modelo, precio,
+									cantDisponible, velocidadGHZ, tipoDeConexion);
 							Controladora.getInstance().agregarComponente(microprocesador);
 						}
-						 
-						JOptionPane.showMessageDialog(null, "Registro Completo!","Informacion",JOptionPane.INFORMATION_MESSAGE);
+
+						JOptionPane.showMessageDialog(null, "Registro Completo!", "Informacion",
+								JOptionPane.INFORMATION_MESSAGE);
 
 					}
 				});
@@ -380,7 +388,7 @@ public class RegComponente extends JDialog {
 	}// Fin registro
 
 	private void nextDataIncoming() {
-		txtID.setText("NumSer#"+Controladora.codComponente);
+		txtID.setText("NumSer#" + Controladora.codComponente);
 		txtMarca.setText("");
 		txtModelo.setText("");
 		jSpinnerCantDisponible.setValue(new Integer(0));

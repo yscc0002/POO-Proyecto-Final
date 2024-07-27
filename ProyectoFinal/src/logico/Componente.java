@@ -1,57 +1,60 @@
 package logico;
 
-public class Componente {
-    private String numeroDeSerie;
-    private String marca;
-    private String modelo;
-    private float precio;
-    private int cantDisponible;
+import java.io.Serializable;
 
-    public Componente(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible) {
-        this.numeroDeSerie = numeroDeSerie;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.precio = precio;
-        this.cantDisponible = cantDisponible;
-    }
+public class Componente implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private String numeroDeSerie;
+	private String marca;
+	private String modelo;
+	private float precio;
+	private int cantDisponible;
 
-    public String getNumeroDeSerie() {
-        return numeroDeSerie;
-    }
+	public Componente(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible) {
+		this.numeroDeSerie = numeroDeSerie;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.precio = precio;
+		this.cantDisponible = cantDisponible;
+	}
 
-    public void setNumeroDeSerie(String numeroDeSerie) {
-        this.numeroDeSerie = numeroDeSerie;
-    }
+	public String getNumeroDeSerie() {
+		return numeroDeSerie;
+	}
 
-    public String getMarca() {
-        return marca;
-    }
+	public void setNumeroDeSerie(String numeroDeSerie) {
+		this.numeroDeSerie = numeroDeSerie;
+	}
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
+	public String getMarca() {
+		return marca;
+	}
 
-    public String getModelo() {
-        return modelo;
-    }
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
+	public String getModelo() {
+		return modelo;
+	}
 
-    public float getPrecio() {
-        return precio;
-    }
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
 
-    public void setPrecio(float precio) {
-        this.precio = precio;
-    }
+	public float getPrecio() {
+		return precio;
+	}
 
-    public int getCantDisponible() {
-        return cantDisponible;
-    }
+	public void setPrecio(float precio) {
+		this.precio = precio;
+	}
 
-    public void setCantDisponible(int cantDisponible) {
-        this.cantDisponible = cantDisponible;
-    }
+	public int getCantDisponible() {
+		return cantDisponible;
+	}
+
+	public void setCantDisponible(int cantDisponible) {
+		this.cantDisponible = cantDisponible;
+	}
 }

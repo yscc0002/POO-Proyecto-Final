@@ -1,91 +1,97 @@
 package logico;
 
-public class Cliente {
-    private String idCliente;
-    private String nombre;
-    private String direccion;
-    private String telefono;
-    private String email;
-    private String provincia;
-    private String pais;
+import java.io.Serializable;
 
-    public Cliente(String idCliente, String nombre, String direccion, String telefono, String email, String provincia, String pais) {
-        super();
-        this.idCliente = idCliente;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
-        this.provincia = provincia;
-        this.pais = pais;
-    }
+public class Cliente implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private String idCliente;
+	private String nombre;
+	private String direccion;
+	private String telefono;
+	private String email;
+	private String provincia;
+	private String pais;
 
-    public String getNombre() {
-        return nombre;
-    }
+	public Cliente(String idCliente, String nombre, String direccion, String telefono, String email, String provincia,
+			String pais) {
+		super();
+		this.idCliente = idCliente;
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.email = email;
+		this.provincia = provincia;
+		this.pais = pais;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getDireccion() {
-        return direccion;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
+	public String getDireccion() {
+		return direccion;
+	}
 
-    public String getTelefono() {
-        return telefono;
-    }
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+	public String getTelefono() {
+		return telefono;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getIdCliente() {
-        return idCliente;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getProvincia() {
-        return provincia;
-    }
+	public String getIdCliente() {
+		return idCliente;
+	}
 
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
+	public String getProvincia() {
+		return provincia;
+	}
 
-    public String getPais() {
-        return pais;
-    }
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
 
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
+	public String getPais() {
+		return pais;
+	}
 
-    public float calcularCostoEnvio() {
-        if (pais.equalsIgnoreCase("Republica Dominicana")) {
-            if (provincia.equalsIgnoreCase("La Vega")) {
-                return 100;
-            } else {
-                return 200; 
-            }
-        } else {
-            return 500; 
-        }
-    }
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
 
-    public boolean actualizarComponente(String numeroDeSerie, String nuevaMarca, String nuevoModelo, float nuevoPrecio, int nuevaCantidadDisponible) {
-        Controladora controladora = Controladora.getInstance();
-        return controladora.actualizarComponente(numeroDeSerie, nuevaMarca, nuevoModelo, nuevoPrecio, nuevaCantidadDisponible);
-    }
+	public float calcularCostoEnvio() {
+		if (pais.equalsIgnoreCase("Republica Dominicana")) {
+			if (provincia.equalsIgnoreCase("La Vega")) {
+				return 100;
+			} else {
+				return 200;
+			}
+		} else {
+			return 500;
+		}
+	}
+
+	public boolean actualizarComponente(String numeroDeSerie, String nuevaMarca, String nuevoModelo, float nuevoPrecio,
+			int nuevaCantidadDisponible) {
+		Controladora controladora = Controladora.getInstance();
+		return controladora.actualizarComponente(numeroDeSerie, nuevaMarca, nuevoModelo, nuevoPrecio,
+				nuevaCantidadDisponible);
+	}
 }

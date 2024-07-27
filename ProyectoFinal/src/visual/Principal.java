@@ -2,7 +2,12 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +15,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.border.TitledBorder;
+
+import logico.Controladora;
 
 public class Principal extends JFrame {
 
@@ -19,6 +26,8 @@ public class Principal extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		deserializarControladora();
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -29,6 +38,31 @@ public class Principal extends JFrame {
 				}
 			}
 		});
+
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			serializarControladora();
+		}));
+	}
+
+	private static void deserializarControladora() {
+		try (FileInputStream fileIn = new FileInputStream("Controladora.dat");
+				ObjectInputStream in = new ObjectInputStream(fileIn)) {
+			Controladora temp = (Controladora) in.readObject();
+			Controladora.setControladora(temp);
+		} catch (FileNotFoundException e) {
+			System.out.println("Archivo no encontrado, se creara un nuevo archivo al cerrar la aplicacion.");
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void serializarControladora() {
+		try (FileOutputStream fileOut = new FileOutputStream("Controladora.dat");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+			out.writeObject(Controladora.getInstance());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -38,60 +72,60 @@ public class Principal extends JFrame {
 		setTitle("Tienda de Computacion Los Charlatanes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 653, 498);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
-		JMenu mnNewMenu = new JMenu("Componentes");
-		menuBar.add(mnNewMenu);
-		
+
+		JMenu mnComponentes = new JMenu("Componentes");
+		menuBar.add(mnComponentes);
+
 		JMenuItem menuItemRegistro = new JMenuItem("Registro");
-		mnNewMenu.add(menuItemRegistro);
-		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listado");
-		mnNewMenu.add(mntmNewMenuItem_1);
-		
-		JMenu mnNewMenu_4 = new JMenu("Combos");
-		menuBar.add(mnNewMenu_4);
-		
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Ensamblaje");
-		mnNewMenu_4.add(mntmNewMenuItem_6);
-		
-		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Consultar Combos");
-		mnNewMenu_4.add(mntmNewMenuItem_7);
-		
-		JMenu mnNewMenu_1 = new JMenu("Ventas");
-		menuBar.add(mnNewMenu_1);
-		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Facturar");
-		mnNewMenu_1.add(mntmNewMenuItem_2);
-		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Consultar Facturas");
-		mnNewMenu_1.add(mntmNewMenuItem_3);
-		
-		JMenu mnNewMenu_2 = new JMenu("Clientes");
-		menuBar.add(mnNewMenu_2);
-		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Registro");
-		mnNewMenu_2.add(mntmNewMenuItem_4);
-		
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Listado");
-		mnNewMenu_2.add(mntmNewMenuItem_5);
-		
-		JMenu mnNewMenu_3 = new JMenu("Tienda");
-		menuBar.add(mnNewMenu_3);
-		
-		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Null");
-		mnNewMenu_3.add(mntmNewMenuItem_8);
+		mnComponentes.add(menuItemRegistro);
+
+		JMenuItem menuItemListado = new JMenuItem("Listado");
+		mnComponentes.add(menuItemListado);
+
+		JMenu mnCombos = new JMenu("Combos");
+		menuBar.add(mnCombos);
+
+		JMenuItem menuItemEnsamblaje = new JMenuItem("Ensamblaje");
+		mnCombos.add(menuItemEnsamblaje);
+
+		JMenuItem menuItemConsultarCombos = new JMenuItem("Consultar Combos");
+		mnCombos.add(menuItemConsultarCombos);
+
+		JMenu mnVentas = new JMenu("Ventas");
+		menuBar.add(mnVentas);
+
+		JMenuItem menuItemFacturar = new JMenuItem("Facturar");
+		mnVentas.add(menuItemFacturar);
+
+		JMenuItem menuItemConsultarFacturas = new JMenuItem("Consultar Facturas");
+		mnVentas.add(menuItemConsultarFacturas);
+
+		JMenu mnClientes = new JMenu("Clientes");
+		menuBar.add(mnClientes);
+
+		JMenuItem menuItemRegistroCliente = new JMenuItem("Registro");
+		mnClientes.add(menuItemRegistroCliente);
+
+		JMenuItem menuItemListadoCliente = new JMenuItem("Listado");
+		mnClientes.add(menuItemListadoCliente);
+
+		JMenu mnTienda = new JMenu("Tienda");
+		menuBar.add(mnTienda);
+
+		JMenuItem menuItemNull = new JMenuItem("Null");
+		mnTienda.add(menuItemNull);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		JPanel pnlDeTrabajo = new JPanel();
 		pnlDeTrabajo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(pnlDeTrabajo, BorderLayout.CENTER);
 		pnlDeTrabajo.setLayout(new BorderLayout(0, 0));
 	}
-
 }
