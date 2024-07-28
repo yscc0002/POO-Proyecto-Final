@@ -152,14 +152,21 @@ public class Principal extends JFrame {
 		pnlDeTrabajo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(pnlDeTrabajo, BorderLayout.CENTER);
 		pnlDeTrabajo.setLayout(new BorderLayout(0, 0));
+		
+		menuItemRegistro.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        RegComponente dialog = new RegComponente();
+		        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		        dialog.setVisible(true);
+		    }
+		});
 	}
 
 	private void mostrarGrafico() {
 		
 		DefaultPieDataset data = new DefaultPieDataset();
-		data.setValue("Local", 40);
-		data.setValue("Nacional", 30);
-		data.setValue("Internacional", 20);
+		data.setValue("Nacional", 60);
+		data.setValue("Internacional", 40);
 
 		JFreeChart chart = ChartFactory.createPieChart(
 				"Rango de ventas por zona",
