@@ -118,6 +118,13 @@ public class Principal extends JFrame {
 
 		JMenuItem menuItemRegistroCliente = new JMenuItem("Registro");
 		mnClientes.add(menuItemRegistroCliente);
+		
+		menuItemRegistroCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistroCliente dialog = new RegistroCliente(null);
+				dialog.setVisible(true);
+			}
+		});
 
 		JMenuItem menuItemListadoCliente = new JMenuItem("Listado");
 		mnClientes.add(menuItemListadoCliente);
