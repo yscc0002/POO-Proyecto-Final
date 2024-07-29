@@ -264,4 +264,5 @@ public class RegistroCliente extends JDialog {
     private String generateID() {
         return UUID.randomUUID().toString();
     }
+    
 }

@@ -94,4 +94,5 @@ public class Cliente implements Serializable {
 		return controladora.actualizarComponente(numeroDeSerie, nuevaMarca, nuevoModelo, nuevoPrecio,
 				nuevaCantidadDisponible);
 	}
+	
 }
