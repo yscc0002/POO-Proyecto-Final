@@ -10,6 +10,7 @@ public class Controladora implements Serializable {
     private ArrayList<Componente> losComponentes;
     private ArrayList<Cliente> losClientes;
     private ArrayList<Pedido> losPedidos;
+    private ArrayList<Combo> losCombos;  // Nueva lista de combos
     public static int codComponente = 1;
 
     // Patron Singleton
@@ -20,6 +21,7 @@ public class Controladora implements Serializable {
         this.losComponentes = new ArrayList<>();
         this.losClientes = new ArrayList<>();
         this.losPedidos = new ArrayList<>();
+        this.losCombos = new ArrayList<>(); 
     }
 
     public static Controladora getInstance() {
@@ -55,6 +57,14 @@ public class Controladora implements Serializable {
 
     public void setLosPedidos(ArrayList<Pedido> losPedidos) {
         this.losPedidos = losPedidos;
+    }
+
+    public ArrayList<Combo> getLosCombos() {
+        return losCombos;
+    }
+
+    public void setLosCombos(ArrayList<Combo> losCombos) {
+        this.losCombos = losCombos;
     }
 
     public void agregarCliente(Cliente cliente) {
@@ -224,5 +234,18 @@ public class Controladora implements Serializable {
 
     public static void setControladora(Controladora temp) {
         Controladora.controladora = temp;
+    }
+
+    public Combo verificarCombo(String codigo) {
+        for (Combo combo : losCombos) {
+            if (combo.getCodigo().equalsIgnoreCase(codigo)) {
+                return combo;
+            }
+        }
+        return null;
+    }
+
+    public void agregarCombo(Combo combo) {
+        losCombos.add(combo);
     }
 }

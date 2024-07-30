@@ -100,6 +100,13 @@ public class Principal extends JFrame {
 
         JMenuItem menuItemConsultarCombos = new JMenuItem("Consultar Combos");
         mnCombos.add(menuItemConsultarCombos);
+        menuItemConsultarCombos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ConsultarCombos dialog = new ConsultarCombos();
+                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                dialog.setVisible(true);
+            }
+        });
 
         JMenu mnVentas = new JMenu("Ventas");
         menuBar.add(mnVentas);
@@ -115,7 +122,6 @@ public class Principal extends JFrame {
 
         JMenuItem menuItemRegistroCliente = new JMenuItem("Registro");
         mnClientes.add(menuItemRegistroCliente);
-
         menuItemRegistroCliente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RegistroCliente dialog = new RegistroCliente(null);
@@ -187,5 +193,4 @@ public class Principal extends JFrame {
             e.printStackTrace();
         }
     }
-    
 }
