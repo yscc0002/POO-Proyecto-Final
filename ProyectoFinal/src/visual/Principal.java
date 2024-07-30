@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,171 +27,186 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Principal extends JFrame {
-// Hola
-    private JPanel contentPane;
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        deserializarControladora();
+	private JPanel contentPane;
+	private Dimension dim;
 
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Principal frame = new Principal();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            serializarControladora();
-        }));
-    }
 
-    private static void deserializarControladora() {
-        try (FileInputStream fileIn = new FileInputStream("Controladora.dat");
-             ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            Controladora temp = (Controladora) in.readObject();
-            Controladora.setControladora(temp);
-        } catch (FileNotFoundException e) {
-            System.out.println("Archivo no encontrado, se creará un nuevo archivo al cerrar la aplicación.");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private static void serializarControladora() {
-        try (FileOutputStream fileOut = new FileOutputStream("Controladora.dat");
-             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(Controladora.getInstance());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * Create the frame.
-     */
-    public Principal() {
-        setTitle("Tienda de Computacion Los Charlatanes");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 653, 498);
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		deserializarControladora();
 
-        JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Principal frame = new Principal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
-        JMenu mnComponentes = new JMenu("Componentes");
-        menuBar.add(mnComponentes);
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			serializarControladora();
+		}));
+	}
 
-        JMenuItem menuItemRegistro = new JMenuItem("Registro");
-        mnComponentes.add(menuItemRegistro);
+	private static void deserializarControladora() {
+		try (FileInputStream fileIn = new FileInputStream("Controladora.dat");
+				ObjectInputStream in = new ObjectInputStream(fileIn)) {
+			Controladora temp = (Controladora) in.readObject();
+			Controladora.setControladora(temp);
+		} catch (FileNotFoundException e) {
+			System.out.println("Archivo no encontrado, se creará un nuevo archivo al cerrar la aplicación.");
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
-        JMenuItem menuItemListado = new JMenuItem("Listado");
-        mnComponentes.add(menuItemListado);
+	private static void serializarControladora() {
+		try (FileOutputStream fileOut = new FileOutputStream("Controladora.dat");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+			out.writeObject(Controladora.getInstance());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-        JMenu mnCombos = new JMenu("Combos");
-        menuBar.add(mnCombos);
+	/**
+	 * Create the frame.
+	 */
+	public Principal() {
+		setTitle("Tienda de Computacion Alonso y Asociados");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 653, 498);
+		dim = getToolkit().getScreenSize();
+		setSize(dim.width, dim.height-30); 
+		setLocationRelativeTo(null);
 
-        JMenuItem menuItemEnsamblaje = new JMenuItem("Ensamblaje");
-        mnCombos.add(menuItemEnsamblaje);
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
 
-        JMenuItem menuItemConsultarCombos = new JMenuItem("Consultar Combos");
-        mnCombos.add(menuItemConsultarCombos);
-        menuItemConsultarCombos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ConsultarCombos dialog = new ConsultarCombos();
-                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                dialog.setVisible(true);
-            }
-        });
+		JMenu mnComponentes = new JMenu("Componentes");
+		menuBar.add(mnComponentes);
 
-        JMenu mnVentas = new JMenu("Ventas");
-        menuBar.add(mnVentas);
+		JMenuItem menuItemRegistro = new JMenuItem("Registro");
+		mnComponentes.add(menuItemRegistro);
 
-        JMenuItem menuItemFacturar = new JMenuItem("Facturar");
-        mnVentas.add(menuItemFacturar);
+		JMenuItem menuItemListado = new JMenuItem("Listado");
+		menuItemListado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListComponente listComponente = new ListComponente();
+				listComponente.setModal(true);
+				listComponente.setVisible(true);
+			}
+		});
+		mnComponentes.add(menuItemListado);
 
-        JMenuItem menuItemConsultarFacturas = new JMenuItem("Consultar Facturas");
-        mnVentas.add(menuItemConsultarFacturas);
+		JMenu mnCombos = new JMenu("Combos");
+		menuBar.add(mnCombos);
 
-        JMenu mnClientes = new JMenu("Clientes");
-        menuBar.add(mnClientes);
+		JMenuItem menuItemEnsamblaje = new JMenuItem("Ensamblaje");
+		mnCombos.add(menuItemEnsamblaje);
 
-        JMenuItem menuItemRegistroCliente = new JMenuItem("Registro");
-        mnClientes.add(menuItemRegistroCliente);
-        menuItemRegistroCliente.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                RegistroCliente dialog = new RegistroCliente(null);
-                dialog.setVisible(true);
-            }
-        });
+		JMenuItem menuItemConsultarCombos = new JMenuItem("Consultar Combos");
+		mnCombos.add(menuItemConsultarCombos);
+		menuItemConsultarCombos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarCombos dialog = new ConsultarCombos();
+				dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+			}
+		});
 
-        JMenuItem menuItemListadoCliente = new JMenuItem("Listado");
-        mnClientes.add(menuItemListadoCliente);
-        menuItemListadoCliente.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ListarClientes dialog = new ListarClientes(false);
-                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                dialog.setVisible(true);
-            }
-        });
+		JMenu mnVentas = new JMenu("Ventas");
+		menuBar.add(mnVentas);
 
-        JMenu mnTienda = new JMenu("Tienda");
-        menuBar.add(mnTienda);
+		JMenuItem menuItemFacturar = new JMenuItem("Facturar");
+		mnVentas.add(menuItemFacturar);
 
-        JMenuItem menuItemNull = new JMenuItem("Null");
-        mnTienda.add(menuItemNull);
+		JMenuItem menuItemConsultarFacturas = new JMenuItem("Consultar Facturas");
+		mnVentas.add(menuItemConsultarFacturas);
 
-        JMenuItem menuItemMostrarGrafico = new JMenuItem("Rango de ventas por zona");
-        mnTienda.add(menuItemMostrarGrafico);
-        menuItemMostrarGrafico.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mostrarGrafico();
-            }
-        });
+		JMenu mnClientes = new JMenu("Clientes");
+		menuBar.add(mnClientes);
 
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(new BorderLayout(0, 0));
-        setContentPane(contentPane);
+		JMenuItem menuItemRegistroCliente = new JMenuItem("Registro");
+		mnClientes.add(menuItemRegistroCliente);
+		menuItemRegistroCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistroCliente dialog = new RegistroCliente(null);
+				dialog.setVisible(true);
+			}
+		});
 
-        JPanel pnlDeTrabajo = new JPanel();
-        pnlDeTrabajo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        contentPane.add(pnlDeTrabajo, BorderLayout.CENTER);
+		JMenuItem menuItemListadoCliente = new JMenuItem("Listado");
+		mnClientes.add(menuItemListadoCliente);
+		menuItemListadoCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListarClientes dialog = new ListarClientes(false);
+				dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+			}
+		});
 
-        menuItemRegistro.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                RegComponente dialog = new RegComponente();
-                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                dialog.setVisible(true);
-            }
-        });
-    }
+		JMenu mnTienda = new JMenu("Tienda");
+		menuBar.add(mnTienda);
 
-    private void mostrarGrafico() {
-        DefaultPieDataset data = new DefaultPieDataset();
-        data.setValue("Nacional", 60);
-        data.setValue("Internacional", 40);
+		JMenuItem menuItemNull = new JMenuItem("Null");
+		mnTienda.add(menuItemNull);
 
-        JFreeChart chart = ChartFactory.createPieChart(
-                "Rango de ventas por zona",
-                data,
-                true,
-                true,
-                false);
+		JMenuItem menuItemMostrarGrafico = new JMenuItem("Rango de ventas por zona");
+		mnTienda.add(menuItemMostrarGrafico);
+		menuItemMostrarGrafico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mostrarGrafico();
+			}
+		});
 
-        ChartFrame frame = new ChartFrame("JFreeChart", chart);
-        frame.pack();
-        frame.setVisible(true);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
 
-        try {
-            ChartUtilities.saveChartAsJPEG(new File("rango_ventas_por_zona.jpg"), chart, 500, 500);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		JPanel pnlDeTrabajo = new JPanel();
+		pnlDeTrabajo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		contentPane.add(pnlDeTrabajo, BorderLayout.CENTER);
+
+		menuItemRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegComponente dialog = new RegComponente(null);
+				dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+			}
+		});
+	}
+
+	private void mostrarGrafico() {
+		DefaultPieDataset data = new DefaultPieDataset();
+		data.setValue("Nacional", 60);
+		data.setValue("Internacional", 40);
+
+		JFreeChart chart = ChartFactory.createPieChart(
+				"Rango de ventas por zona",
+				data,
+				true,
+				true,
+				false);
+
+		ChartFrame frame = new ChartFrame("JFreeChart", chart);
+		frame.pack();
+		frame.setVisible(true);
+
+		try {
+			ChartUtilities.saveChartAsJPEG(new File("rango_ventas_por_zona.jpg"), chart, 500, 500);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
