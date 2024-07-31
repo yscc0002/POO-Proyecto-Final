@@ -3,7 +3,16 @@ package logico;
 import java.io.Serializable;
 
 public class Combo implements Serializable {
-    private int numComponentes;
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	
+	private int numComponentes;
     private double porcentajeDescuento;
     private String codigo;
 

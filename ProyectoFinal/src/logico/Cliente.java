@@ -3,7 +3,10 @@ package logico;
 import java.io.Serializable;
 
 public class Cliente implements Serializable {
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2460621340769671336L;
 	private String idCliente;
 	private String nombre;
 	private String direccion;

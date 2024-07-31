@@ -2,7 +2,7 @@ package logico;
 
 import java.io.Serializable;
 
-public class DiscoDuro extends Componente implements Serializable {
+public class DiscoDuro extends Componente {
 	private static final long serialVersionUID = 1L;
 	private int capacidadDeAlmacenamientoGB;
 	private String tipoDeConexion;

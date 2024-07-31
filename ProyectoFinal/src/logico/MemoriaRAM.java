@@ -2,7 +2,7 @@ package logico;
 
 import java.io.Serializable;
 
-public class MemoriaRAM extends Componente implements Serializable {
+public class MemoriaRAM extends Componente {
 	private static final long serialVersionUID = 1L;
 	private int cantMemoriaRAM;
 	private String tipoMemoria;

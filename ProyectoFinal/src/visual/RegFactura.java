@@ -63,6 +63,7 @@ public class RegFactura extends JDialog {
 	private static Object rowTblCarrito[];
 	private static int indexTblCarrito;
 	private JSpinner jSpinnerFechaFacturacion;
+	private JTextField txtPrecioTotal;
 
 
 	/**
@@ -145,10 +146,9 @@ public class RegFactura extends JDialog {
 						txtIDCliente.setText("Cli#"+Controladora.codCliente);
 						txtNombreCliente.setEnabled(true);
 						txtDireccionCliente.setEnabled(true);
+						txtEmail.setEnabled(true);
 						clienteEncontrado = false;
 					}
-
-
 				}
 			});
 			btnBuscarCliente.setBounds(192, 12, 115, 29);
@@ -219,6 +219,7 @@ public class RegFactura extends JDialog {
 					btnAgregarFactura.setEnabled(false);
 					loadTableComponentesDisponibles();
 					loadTableCarrito();
+					txtPrecioTotal.setText(calculador());
 				}
 			});
 			btnAgregarFactura.setBounds(349, 347, 115, 29);
@@ -279,6 +280,16 @@ public class RegFactura extends JDialog {
 			jSpinnerFechaFacturacion.setBounds(567, 422, 161, 26);
 			jSpinnerFechaFacturacion.setEditor(dateSpinnerFechaDeSolicitud); // Aplicar nuevo formato
 			pnlDeTrabajo.add(jSpinnerFechaFacturacion);
+
+			txtPrecioTotal = new JTextField();
+			txtPrecioTotal.setEnabled(false);
+			txtPrecioTotal.setColumns(10);
+			txtPrecioTotal.setBounds(493, 461, 115, 26);
+			pnlDeTrabajo.add(txtPrecioTotal);
+
+			JLabel lblPrecioTotal = new JLabel("Precio Total:");
+			lblPrecioTotal.setBounds(394, 461, 104, 20);
+			pnlDeTrabajo.add(lblPrecioTotal);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -317,6 +328,7 @@ public class RegFactura extends JDialog {
 							}
 
 							String idFactura = txtIDFactura.getText();
+							Float precioTotal = Float.parseFloat(txtPrecioTotal.getText());
 
 							// De fecha entera a "YYYY"
 							Date date = (Date) jSpinnerFechaFacturacion.getValue();// Obtengo Valor bruto
@@ -334,9 +346,9 @@ public class RegFactura extends JDialog {
 
 								Componente tempComponente = Controladora.getInstance().buscarComponentePorNumeroDeSerie(idComponente);
 
-
+								
 								if (tempComponente != null) {// Realizar prestamo
-									Controladora.getInstance().realizarFactura(idFactura, cliente.getIdCliente(), fechaFacturacion, tempComponente);
+									Controladora.getInstance().realizarFactura(idFactura, cliente.getIdCliente(), fechaFacturacion,tempComponente, precioTotal);
 								}
 							}
 							JOptionPane.showMessageDialog(null, "Facturacion satisfatoria!", "Registro de Factura", JOptionPane.INFORMATION_MESSAGE);
@@ -400,6 +412,16 @@ public class RegFactura extends JDialog {
 
 	//Cierre cargar tablas
 
+	public static String calculador() {
+		float precioTotal = 0;
+		for(Componente tempComponente: Controladora.getInstance().getComponentesSeleccionados()) {
+			precioTotal += tempComponente.getPrecio();
+		}
+		String precioTotalString = String.valueOf(precioTotal);
+		return precioTotalString;		
+		
+	}
+
 	// Limpiadores
 
 	public static void nextDataIncomingCliente() {
@@ -416,5 +438,7 @@ public class RegFactura extends JDialog {
 		txtEmail.setText("");
 		txtIDFactura.setText("Fac#"+Controladora.codFactura);
 	}
+
+
 }
 

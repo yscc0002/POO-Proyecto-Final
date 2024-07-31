@@ -2,7 +2,7 @@ package logico;
 
 import java.io.Serializable;
 
-public class Microprocesador extends Componente implements Serializable {
+public class Microprocesador extends Componente {
 	private static final long serialVersionUID = 1L;
 	private float velocidadGHZ;
 	private String socket;

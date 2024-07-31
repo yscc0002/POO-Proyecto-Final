@@ -3,7 +3,16 @@ package logico;
 import java.io.Serializable;
 
 public class Componente implements Serializable {
+
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+
 	private String numeroDeSerie;
 	private String marca;
 	private String modelo;

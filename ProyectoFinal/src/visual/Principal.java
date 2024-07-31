@@ -1,45 +1,87 @@
 package visual;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+
+import logico.Controladora;
+import logico.UserC;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.border.TitledBorder;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import logico.Controladora;
-import java.io.File;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
-	private Dimension dim;
-
+	static Socket sfd = null;
+	static DataInputStream EntradaSocket;
+	static DataOutputStream SalidaSocket;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		deserializarControladora();
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				FileInputStream tienda;
+				FileOutputStream tienda2;
+				ObjectInputStream tiendaRead;
+				ObjectOutputStream tiendaWrite;
+				try {
+					tienda = new FileInputStream ("tienda.dat");
+					tiendaRead = new ObjectInputStream(tienda);
+					Controladora temp = (Controladora)tiendaRead.readObject();
+					Controladora.setControladora(temp);
+					tienda.close();
+					tiendaRead.close();
+				} catch (FileNotFoundException e) {
+					try {
+						tienda2 = new  FileOutputStream("tienda.dat");
+						tiendaWrite = new ObjectOutputStream(tienda2);
+						UserC aux = new UserC("Administrador", "admin", "admin");
+						Controladora.getInstance().regUser(aux);
+						tiendaWrite.writeObject(Controladora.getInstance());
+						tienda2.close();
+						tiendaWrite.close();
+					} catch (FileNotFoundException e1) {
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+					}
+				} catch (IOException e) {
+
+
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+				//
+
+
 				try {
 					Principal frame = new Principal();
 					frame.setVisible(true);
@@ -48,170 +90,149 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			serializarControladora();
-		}));
-	}
-
-	private static void deserializarControladora() {
-		try (FileInputStream fileIn = new FileInputStream("Controladora.dat");
-				ObjectInputStream in = new ObjectInputStream(fileIn)) {
-			Controladora temp = (Controladora) in.readObject();
-			Controladora.setControladora(temp);
-		} catch (FileNotFoundException e) {
-			System.out.println("Archivo no encontrado, se creará un nuevo archivo al cerrar la aplicación.");
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static void serializarControladora() {
-		try (FileOutputStream fileOut = new FileOutputStream("Controladora.dat");
-				ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-			out.writeObject(Controladora.getInstance());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public Principal() {
-		setTitle("Tienda de Computacion Alonso y Asociados");
+
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try (FileOutputStream tienda2 = new FileOutputStream("tienda.dat");
+						ObjectOutputStream tiendaWrite = new ObjectOutputStream(tienda2)) {
+					if (Controladora.getInstance() != null) {
+						tiendaWrite.writeObject(Controladora.getInstance());
+						System.out.println("Objeto guardado en el archivo.");
+					} else {
+						System.out.println("La instancia de Controladora es null.");
+					}
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+
+
+		///////
+		setTitle("Tienda de Computacion Alonso y Asociado");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 653, 498);
-		dim = getToolkit().getScreenSize();
-		setSize(dim.width, dim.height-30); 
-		setLocationRelativeTo(null);
+		setBounds(100, 100, 867, 631);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JMenu mnComponentes = new JMenu("Componentes");
-		menuBar.add(mnComponentes);
+		JMenu mnNewMenu = new JMenu("Componente");
+		menuBar.add(mnNewMenu);
 
-		JMenuItem menuItemRegistro = new JMenuItem("Registro");
-		mnComponentes.add(menuItemRegistro);
+		JMenuItem itemRegistroComponente = new JMenuItem("Registro");
+		itemRegistroComponente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegComponente regComponente = new RegComponente(null);
+				regComponente.setModal(true);
+				regComponente.setVisible(true);
+			}
+		});
+		mnNewMenu.add(itemRegistroComponente);
 
-		JMenuItem menuItemListado = new JMenuItem("Listado");
-		menuItemListado.addActionListener(new ActionListener() {
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listado");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListComponente listComponente = new ListComponente();
 				listComponente.setModal(true);
 				listComponente.setVisible(true);
 			}
+
 		});
-		mnComponentes.add(menuItemListado);
+		mnNewMenu.add(mntmNewMenuItem_1);
 
-		JMenu mnCombos = new JMenu("Combos");
-		menuBar.add(mnCombos);
+		JMenu mnNewMenu_2 = new JMenu("Ventas");
+		menuBar.add(mnNewMenu_2);
 
-		JMenuItem menuItemEnsamblaje = new JMenuItem("Ensamblaje");
-		mnCombos.add(menuItemEnsamblaje);
-
-		JMenuItem menuItemConsultarCombos = new JMenuItem("Consultar Combos");
-		mnCombos.add(menuItemConsultarCombos);
-		menuItemConsultarCombos.addActionListener(new ActionListener() {
+		JMenuItem mntmNewMenuItem = new JMenuItem("Facturar");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConsultarCombos dialog = new ConsultarCombos();
-				dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				dialog.setVisible(true);
-			}
-		});
-
-		JMenu mnVentas = new JMenu("Ventas");
-		menuBar.add(mnVentas);
-
-		JMenuItem menuItemFacturar = new JMenuItem("Facturar");
-		menuItemFacturar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
 				RegFactura regFactura = new RegFactura();
 				regFactura.setModal(true);
 				regFactura.setVisible(true);
 			}
 		});
-		mnVentas.add(menuItemFacturar);
+		mnNewMenu_2.add(mntmNewMenuItem);
 
-		JMenuItem menuItemConsultarFacturas = new JMenuItem("Consultar Facturas");
-		mnVentas.add(menuItemConsultarFacturas);
-
-		JMenu mnClientes = new JMenu("Clientes");
-		menuBar.add(mnClientes);
-
-		JMenuItem menuItemRegistroCliente = new JMenuItem("Registro");
-		mnClientes.add(menuItemRegistroCliente);
-		menuItemRegistroCliente.addActionListener(new ActionListener() {
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Consultar Factura");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegistroCliente dialog = new RegistroCliente(null);
-				dialog.setVisible(true);
+				ListFactura listFactura = new ListFactura();
+				listFactura.setModal(true);
+				listFactura.setVisible(true);
 			}
 		});
+		mnNewMenu_2.add(mntmNewMenuItem_2);
 
-		JMenuItem menuItemListadoCliente = new JMenuItem("Listado");
-		mnClientes.add(menuItemListadoCliente);
-		menuItemListadoCliente.addActionListener(new ActionListener() {
+		JMenu mnNewMenu_3 = new JMenu("Cliente");
+		menuBar.add(mnNewMenu_3);
+
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Registro");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListarClientes dialog = new ListarClientes(false);
-				dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				dialog.setVisible(true);
+				RegistroCliente registroCliente = new RegistroCliente(null);
+				registroCliente.setModal(true);
+				registroCliente.setVisible(true);
 			}
 		});
+		mnNewMenu_3.add(mntmNewMenuItem_3);
 
-		JMenu mnTienda = new JMenu("Tienda");
-		menuBar.add(mnTienda);
-
-		JMenuItem menuItemNull = new JMenuItem("Null");
-		mnTienda.add(menuItemNull);
-
-		JMenuItem menuItemMostrarGrafico = new JMenuItem("Rango de ventas por zona");
-		mnTienda.add(menuItemMostrarGrafico);
-		menuItemMostrarGrafico.addActionListener(new ActionListener() {
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listado");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mostrarGrafico();
+				ListarClientes listarClientes = new ListarClientes(true);
+				listarClientes.setModal(true);
+				listarClientes.setVisible(true);
 			}
 		});
+		mnNewMenu_3.add(mntmNewMenuItem_4);
 
+		JMenu mnNewMenu_4 = new JMenu("Tienda");
+		menuBar.add(mnNewMenu_4);
+
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Guardar");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					// Guarda el objeto en un archivo
+					try (FileOutputStream tienda2 = new FileOutputStream("C:\\tempFiles\\tienda.dat");
+							ObjectOutputStream tiendaWrite = new ObjectOutputStream(tienda2)) {
+						tiendaWrite.writeObject(Controladora.getInstance());
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
+
+					// Envía el objeto a través del socket
+					try (Socket socket = new Socket("127.0.0.1", 7000);
+							ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())) {
+						oos.writeObject(Controladora.getInstance());
+						oos.flush();
+						System.out.println("Objeto enviado");
+					} catch (IOException ex) {
+						System.out.println("Error al enviar el objeto: " + ex.getMessage());
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		mnNewMenu_4.add(mntmNewMenuItem_5);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
 		JPanel pnlDeTrabajo = new JPanel();
-		pnlDeTrabajo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(pnlDeTrabajo, BorderLayout.CENTER);
-
-		menuItemRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				RegComponente dialog = new RegComponente(null);
-				dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				dialog.setVisible(true);
-			}
-		});
+		pnlDeTrabajo.setLayout(new BorderLayout(0, 0));
 	}
 
-	private void mostrarGrafico() {
-		DefaultPieDataset data = new DefaultPieDataset();
-		data.setValue("Nacional", 60);
-		data.setValue("Internacional", 40);
-
-		JFreeChart chart = ChartFactory.createPieChart(
-				"Rango de ventas por zona",
-				data,
-				true,
-				true,
-				false);
-
-		ChartFrame frame = new ChartFrame("JFreeChart", chart);
-		frame.pack();
-		frame.setVisible(true);
-
-		try {
-			ChartUtilities.saveChartAsJPEG(new File("rango_ventas_por_zona.jpg"), chart, 500, 500);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

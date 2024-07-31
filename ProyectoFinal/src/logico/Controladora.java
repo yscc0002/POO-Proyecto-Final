@@ -5,15 +5,32 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Controladora implements Serializable {
-	private static final long serialVersionUID = 1L;
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	private ArrayList<Componente> losComponentes;
 	private ArrayList<Cliente> losClientes;
 	private ArrayList<Factura> lasFacturas;
-	private ArrayList<Combo> losCombos;  // Nueva lista de combos
+	private ArrayList<Combo> losCombos;  
+	private ArrayList<UserC> misUsuarios;
 	public static int codComponente = 1;
 	public static int codCliente = 1;
 	public static int codFactura = 1;
+
+	private static UserC loginUser;
+
+	public static UserC getLoginUser() {
+		return loginUser;
+	}
+
+	public static void setLoginUser(UserC loginUser) {
+		Controladora.loginUser = loginUser;
+	}
 
 	// Patron Singleton
 	private static Controladora controladora = null;
@@ -23,7 +40,8 @@ public class Controladora implements Serializable {
 		this.losComponentes = new ArrayList<>();
 		this.losClientes = new ArrayList<>();
 		this.lasFacturas = new ArrayList<>();
-		this.losCombos = new ArrayList<>(); 
+		this.losCombos = new ArrayList<>();
+		this.misUsuarios = new ArrayList<>();
 	}
 
 	public static Controladora getInstance() {
@@ -33,11 +51,14 @@ public class Controladora implements Serializable {
 		return controladora;
 	}
 
-	protected Object readResolve() {
-		return getInstance();
+
+	public static Controladora getControladora() {
+		return controladora;
 	}
-	
-	
+
+	public static void setControladora(Controladora controladora) {
+		Controladora.controladora = controladora;
+	}
 
 	public ArrayList<Componente> getLosComponentes() {
 		return losComponentes;
@@ -113,10 +134,10 @@ public class Controladora implements Serializable {
 		codComponente++;
 	}
 
-	public void agregarFactura(String idFactura, String idCliente, int fechaFacturacion, Componente componente) {
+	public void agregarFactura(String idFactura, String idCliente, int fechaFacturacion, float precioTotal, Componente componente) {
 		Cliente cliente = buscarClientePorId(idCliente);
 		if(cliente!=null) {
-			lasFacturas.add(new Factura(idFactura,idCliente,fechaFacturacion,componente));
+		//	lasFacturas.add(new Factura(idFactura,idCliente,fechaFacturacion,precioTotal,componente));
 		}
 		codFactura++;
 	}
@@ -156,23 +177,6 @@ public class Controladora implements Serializable {
 		codCliente++;
 	}
 
-	public ArrayList<DiscoDuro> encontrarDiscosDurosCompatibles(String numeroDeSerieMotherBoard) {
-		MotherBoard motherboardBuscada = buscarMotherBoardPorNumeroDeSerie(numeroDeSerieMotherBoard);
-		ArrayList<DiscoDuro> discosCompatibles = new ArrayList<>();
-
-		if (motherboardBuscada != null) {
-			ArrayList<DiscoDuro> discosAceptados = motherboardBuscada.getDiscoDurosAceptados();
-			for (Componente componente : losComponentes) {
-				if (componente instanceof DiscoDuro) {
-					DiscoDuro disco = (DiscoDuro) componente;
-					if (esCompatible(disco, discosAceptados) && disco.getCantDisponible() > 0) {
-						discosCompatibles.add(disco);
-					}
-				}
-			}
-		}
-		return discosCompatibles;
-	}
 
 	private MotherBoard buscarMotherBoardPorNumeroDeSerie(String numeroDeSerie) {
 		for (Componente componente : losComponentes) {
@@ -191,7 +195,7 @@ public class Controladora implements Serializable {
 		}
 		return false;
 	}
-
+/*
 	public ArrayList<String> generarReporteVentas() {
 		ArrayList<String> reporteVentas = new ArrayList<>();
 
@@ -210,6 +214,7 @@ public class Controladora implements Serializable {
 
 		return reporteVentas;
 	}
+	*/
 
 	public boolean actualizarComponente(String numeroDeSerie, String nuevaMarca, String nuevoModelo, float nuevoPrecio, int nuevaCantidadDisponible) {
 		Componente componente = buscarComponentePorNumeroDeSerie(numeroDeSerie);
@@ -239,10 +244,6 @@ public class Controladora implements Serializable {
 			}
 		}
 		return microsCompatibles;
-	}
-
-	public static void setControladora(Controladora temp) {
-		Controladora.controladora = temp;
 	}
 
 	public Combo verificarCombo(String codigo) {
@@ -331,17 +332,30 @@ public class Controladora implements Serializable {
 		}
 
 	}
-	
-		
-	public void realizarFactura(String idFactura, String idCliente, int fechaFacturacion, Componente componente) {
+
+
+	public void realizarFactura(String idFactura, String idCliente, int fechaFacturacion,Componente componente, float precioTotal) {
 		Cliente cliente = buscarClientePorId(idCliente);
 
 		if(cliente!=null) {
-				lasFacturas.add(new Factura(idFactura,idCliente,fechaFacturacion,componente));
+			lasFacturas.add(new Factura(idFactura,idCliente,fechaFacturacion,componente,precioTotal));
 		}
 		codFactura++;
 	}
 
+	public void regUser(UserC user) {
+		misUsuarios.add(user);
+	}
 
+	public boolean confirmLogin(String text, String text2) {
+		boolean login = false;
+		for (UserC user : misUsuarios) {
+			if(user.getUsername().equals(text) && user.getPassword().equals(text2)){
+				loginUser = user;
+				login = true;
+			}
+		}
+		return login;
+	}
 
 }
