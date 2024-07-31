@@ -346,7 +346,7 @@ public class RegFactura extends JDialog {
 
 								Componente tempComponente = Controladora.getInstance().buscarComponentePorNumeroDeSerie(idComponente);
 
-								
+
 								if (tempComponente != null) {// Realizar prestamo
 									Controladora.getInstance().realizarFactura(idFactura, cliente.getIdCliente(), fechaFacturacion,tempComponente, precioTotal);
 								}
@@ -419,7 +419,7 @@ public class RegFactura extends JDialog {
 		}
 		String precioTotalString = String.valueOf(precioTotal);
 		return precioTotalString;		
-		
+
 	}
 
 	// Limpiadores
