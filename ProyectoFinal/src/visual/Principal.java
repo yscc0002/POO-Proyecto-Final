@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -39,6 +40,7 @@ public class Principal extends JFrame {
 	static Socket sfd = null;
 	static DataInputStream EntradaSocket;
 	static DataOutputStream SalidaSocket;
+	private Dimension dim;
 
 	/**
 	 * Launch the application.
@@ -120,6 +122,9 @@ public class Principal extends JFrame {
 		setTitle("Tienda de Computacion Alonso y Asociado");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 867, 631);
+		dim = getToolkit().getScreenSize();
+		setSize(dim.width,dim.height-40);
+		setLocationRelativeTo(null);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
