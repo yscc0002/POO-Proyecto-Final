@@ -7,19 +7,19 @@ public class Cliente implements Serializable {
 	private String idCliente;
 	private String nombre;
 	private String direccion;
-	private String telefono;
 	private String email;
+	private String telefono;
 	private String provincia;
 	private String pais;
 
-	public Cliente(String idCliente, String nombre, String direccion, String telefono, String email, String provincia,
+	public Cliente(String idCliente, String nombre, String direccion, String email, String telefono, String provincia,
 			String pais) {
 		super();
 		this.idCliente = idCliente;
 		this.nombre = nombre;
 		this.direccion = direccion;
-		this.telefono = telefono;
 		this.email = email;
+		this.telefono = telefono;
 		this.provincia = provincia;
 		this.pais = pais;
 	}
@@ -40,14 +40,6 @@ public class Cliente implements Serializable {
 		this.direccion = direccion;
 	}
 
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -56,8 +48,12 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public String getIdCliente() {
-		return idCliente;
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 	public String getProvincia() {
@@ -74,6 +70,10 @@ public class Cliente implements Serializable {
 
 	public void setPais(String pais) {
 		this.pais = pais;
+	}
+
+	public String getIdCliente() {
+		return idCliente;
 	}
 
 	public float calcularCostoEnvio() {

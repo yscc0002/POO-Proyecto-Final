@@ -85,8 +85,8 @@ public class RegComponente extends JDialog {
 		}
 
 		setTitle("Registro de Componente");
-		setLocationRelativeTo(null);
 		setBounds(100, 100, 842, 572);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

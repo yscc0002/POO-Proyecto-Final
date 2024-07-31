@@ -9,6 +9,8 @@ public class Componente implements Serializable {
 	private String modelo;
 	private float precio;
 	private int cantDisponible;
+	private boolean seleccionado;
+
 
 	public Componente(String numeroDeSerie, String marca, String modelo, float precio, int cantDisponible) {
 		this.numeroDeSerie = numeroDeSerie;
@@ -56,5 +58,14 @@ public class Componente implements Serializable {
 
 	public void setCantDisponible(int cantDisponible) {
 		this.cantDisponible = cantDisponible;
+	}
+	
+
+	public boolean isSeleccionado() {
+		return seleccionado;
+	}
+
+	public void setSeleccionado(boolean seleccionado) {
+		this.seleccionado = seleccionado;
 	}
 }

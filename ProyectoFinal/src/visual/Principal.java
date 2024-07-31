@@ -32,9 +32,6 @@ public class Principal extends JFrame {
 	private Dimension dim;
 
 
-
-
-
 	/**
 	 * Launch the application.
 	 */
@@ -128,6 +125,14 @@ public class Principal extends JFrame {
 		menuBar.add(mnVentas);
 
 		JMenuItem menuItemFacturar = new JMenuItem("Facturar");
+		menuItemFacturar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				RegFactura regFactura = new RegFactura();
+				regFactura.setModal(true);
+				regFactura.setVisible(true);
+			}
+		});
 		mnVentas.add(menuItemFacturar);
 
 		JMenuItem menuItemConsultarFacturas = new JMenuItem("Consultar Facturas");

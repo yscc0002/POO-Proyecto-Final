@@ -9,9 +9,11 @@ public class Controladora implements Serializable {
 
 	private ArrayList<Componente> losComponentes;
 	private ArrayList<Cliente> losClientes;
-	private ArrayList<Pedido> losPedidos;
+	private ArrayList<Factura> lasFacturas;
 	private ArrayList<Combo> losCombos;  // Nueva lista de combos
 	public static int codComponente = 1;
+	public static int codCliente = 1;
+	public static int codFactura = 1;
 
 	// Patron Singleton
 	private static Controladora controladora = null;
@@ -20,7 +22,7 @@ public class Controladora implements Serializable {
 		super();
 		this.losComponentes = new ArrayList<>();
 		this.losClientes = new ArrayList<>();
-		this.losPedidos = new ArrayList<>();
+		this.lasFacturas = new ArrayList<>();
 		this.losCombos = new ArrayList<>(); 
 	}
 
@@ -34,6 +36,8 @@ public class Controladora implements Serializable {
 	protected Object readResolve() {
 		return getInstance();
 	}
+	
+	
 
 	public ArrayList<Componente> getLosComponentes() {
 		return losComponentes;
@@ -51,12 +55,12 @@ public class Controladora implements Serializable {
 		this.losClientes = losClientes;
 	}
 
-	public ArrayList<Pedido> getLosPedidos() {
-		return losPedidos;
+	public ArrayList<Factura> getLasFacturas() {
+		return lasFacturas;
 	}
 
-	public void setLosPedidos(ArrayList<Pedido> losPedidos) {
-		this.losPedidos = losPedidos;
+	public void setLasFacturas(ArrayList<Factura> lasFacturas) {
+		this.lasFacturas = lasFacturas;
 	}
 
 	public ArrayList<Combo> getLosCombos() {
@@ -65,10 +69,6 @@ public class Controladora implements Serializable {
 
 	public void setLosCombos(ArrayList<Combo> losCombos) {
 		this.losCombos = losCombos;
-	}
-
-	public void agregarCliente(Cliente cliente) {
-		losClientes.add(cliente);
 	}
 
 	public void actualizarCliente(Cliente cliente) {
@@ -107,21 +107,21 @@ public class Controladora implements Serializable {
 		return -1;
 	}
 
-	public void crearPedido(String idPedido, Cliente cliente, ArrayList<Componente> componentesSeleccionados) {
-		Date fechaActual = new Date();
-		float montoTotal = 0;
-		for (Componente componente : componentesSeleccionados) {
-			montoTotal += componente.getPrecio();
-		}
-		montoTotal += montoTotal * 0.18;
-		Pedido nuevoPedido = new Pedido(idPedido, cliente, componentesSeleccionados, fechaActual, montoTotal);
-		losPedidos.add(nuevoPedido);
-	}
 
 	public void agregarComponente(Componente nuevoComponente) {
 		losComponentes.add(nuevoComponente);
 		codComponente++;
 	}
+
+	public void agregarFactura(String idFactura, String idCliente, int fechaFacturacion, Componente componente) {
+		Cliente cliente = buscarClientePorId(idCliente);
+		if(cliente!=null) {
+			lasFacturas.add(new Factura(idFactura,idCliente,fechaFacturacion,componente));
+		}
+		codFactura++;
+	}
+
+
 
 	public boolean eliminarComponente(String numeroDeSerie) {
 		for (int i = 0; i < losComponentes.size(); i++) {
@@ -143,9 +143,17 @@ public class Controladora implements Serializable {
 		return componentesEncontrados;
 	}
 
+
+	public void insertarCliente(Cliente cliente) {
+		losClientes.add(cliente);
+		codCliente++;
+	}
+
+
 	public void crearUsuarioCliente(String idCliente, String nombre, String direccion, String telefono, String email) {
-		Cliente nuevoCliente = new Cliente(idCliente, nombre, direccion, telefono, email, "Provincia Desconocida", "Pais Desconocido");
+		Cliente nuevoCliente = new Cliente(idCliente, nombre, direccion, email, telefono, "Provincia Desconocida", "Pais Desconocido");
 		losClientes.add(nuevoCliente);
+		codCliente++;
 	}
 
 	public ArrayList<DiscoDuro> encontrarDiscosDurosCompatibles(String numeroDeSerieMotherBoard) {
@@ -273,4 +281,67 @@ public class Controladora implements Serializable {
 			losComponentes.set(index, componente);
 		}	
 	}
+
+
+
+
+	public ArrayList<Componente> getComponentesNoSeleccionados(){
+		ArrayList<Componente> componentesNoSeleccionados = new ArrayList<>();
+
+		for(Componente tempComponente : losComponentes) {
+			if(!tempComponente.isSeleccionado()) {
+				componentesNoSeleccionados.add(tempComponente);
+			}
+		}
+		return componentesNoSeleccionados;
+	}
+
+	public ArrayList<Componente> getComponentesSeleccionados(){
+		ArrayList<Componente> componentesSeleccionados = new ArrayList<>();
+
+		for(Componente tempComponente : losComponentes) {
+			if(tempComponente.isSeleccionado()) {
+				componentesSeleccionados.add(tempComponente);
+			}
+		}
+		return componentesSeleccionados;
+
+	}
+
+	public int buscarClientePorIDObtenerIndex(String codigo) {
+		int index = -1;
+		boolean encontrado = false;
+
+		int i = 0;
+		while (!encontrado && i < losClientes.size()) {
+			if(losClientes.get(i).getIdCliente().equalsIgnoreCase(codigo)) {
+				index = i;
+				encontrado = true;
+			}
+			i++;
+		}
+
+		return index;
+	}
+
+	public void actualizarClienteV(Cliente cliente) {
+		int index = buscarClientePorIDObtenerIndex(cliente.getIdCliente());
+		if(index!=-1) {
+			losClientes.set(index, cliente);
+		}
+
+	}
+	
+		
+	public void realizarFactura(String idFactura, String idCliente, int fechaFacturacion, Componente componente) {
+		Cliente cliente = buscarClientePorId(idCliente);
+
+		if(cliente!=null) {
+				lasFacturas.add(new Factura(idFactura,idCliente,fechaFacturacion,componente));
+		}
+		codFactura++;
+	}
+
+
+
 }
